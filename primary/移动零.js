@@ -30,6 +30,26 @@
  */
 
 var moveZeroes = function (nums) {
+    const length = nums.length
+    let space = 0
+
+    for (let i = 0; i < length; i++) {
+        if (nums[i] === 0) {
+            while (nums[i + 1]) {
+                nums[i - space] = nums[i + 1]
+                i++
+            }
+            space++
+        }
+    }
+
+    for (let i = 1; i <= space; i++) {
+        nums[length - i] = 0
+    }
+    return nums
+}
+
+/* var moveZeroes = function (nums) {
     const idxs = []
     nums.forEach((item, index) => {
         if (item === 0) idxs.push(index)
@@ -46,7 +66,7 @@ var moveZeroes = function (nums) {
         nums[nums.length - i] = 0
     }
     return nums
-}
+} */
 
 /* // 慢
 var moveZeroes = function(nums) {
