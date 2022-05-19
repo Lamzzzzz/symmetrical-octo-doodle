@@ -57,65 +57,40 @@ board[i][j] 是一位数字（1-9）或者 '.'
  * @return {boolean}
  */
 var isValidSudoku = function (board) {
-    for (let i = 0; i < 9; i++) {
-        const line = board[i]
-        if (!horizon(line)) {
-            return false
-        }
-        const y = (i + 1) % 3
-        if (y && !square(y)) {
-            return false
-        }
-        if (i === 8 && !vertical()) {
-            return false
-        }
-    }
+    const length = board.length
 
-    function horizon(arr) {
-        const set = new Set()
-        for (let i = 0; i < 9; i++) {
-            if (set.has(arr[i])) {
-                return false
-            }
-            if (arr[i] >= 0) {
-                set.add(arr[i])
-            }
-        }
-        return true
-    }
+    const lineSet = new Set()
+    const verticalSet = new Set()
+    const squareSets = [new Set(), new Set(), new Set()]
 
-    function square(y) {
-        let x = 0
-        while (x < 7) {
-            const set = new Set()
-            for (let i = 0; i < 3; i++) {
-                const value = board[x + i][y - i]
-                if (set.has(value)) {
-                    return false
-                }
-                if (value >= 0) {
-                    set.add(value)
-                }
-            }
-            x += 3
-        }
-        return true
-    }
+    for (let y = 0; y < length; y++) {
+        for (let x = 0; x < length; x++) {
+            const val = board[y][x]
+            const vertical = board[x][y]
 
-    function vertical() {
-        const set = new Set()
-        for (let x = 0; x < 9; x++) {
-            for (let y = 0; y < 9; y++) {
-                const value = board[x][y]
-                if (set.has(value)) {
-                    return false
-                }
-                if (value >= 0) {
-                    set.add(value)
-                }
+            if (val !== '.') {
+                if (lineSet.has(val)) return false
+                lineSet.add(val)
+
+                const vx = Math.floor(x / 3)
+                if (squareSets[vx].has(val)) return false
+                squareSets[vx].add(val)
+            }
+
+            if (vertical !== '.') {
+                if (verticalSet.has(vertical)) return false
+                verticalSet.add(vertical)
+            }
+
+            if (x === length - 1) {
+                lineSet.clear()
+                verticalSet.clear()
             }
         }
-        return true
+
+        if (y === 2 || y === 5) {
+            squareSets.forEach((item) => item.clear())
+        }
     }
 
     return true
