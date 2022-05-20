@@ -30,10 +30,59 @@
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function(s) {
+
+var isPalindrome = function (s) {
+    s = s.replaceAll(/[^a-zA-Z0-9]/g, '').toLowerCase()
+    return s === s.split('').reverse().join('')
+}
+
+var isPalindrome = function (s) {
+    s = s.replaceAll(/[^a-zA-Z0-9]/g, '').toLowerCase()
     let left = 0
     let right = s.length - 1
-    while(left<right) {
-        if(s[left] <= 'z' && s[left] >= 'a' && s[right] <= 'z' && s[right] >= 'a') 
+    while (left < right) {
+        if (s[left] !== s[right]) return false
+        left++
+        right--
     }
-};
+    return true
+}
+
+var isPalindrome = function (s) {
+    s = s.replaceAll(/[^a-zA-Z0-9]/g, '')
+    let left = 0
+    let right = s.length - 1
+    while (left < right) {
+        if (s[left].toLowerCase() !== s[right].toLowerCase()) return false
+        left++
+        right--
+    }
+    return true
+}
+
+var isPalindrome = function (s) {
+    s = s.toLowerCase()
+    let left = 0
+    let right = s.length - 1
+    while (left < right) {
+        if (!isValid(s[left])) {
+            left++
+            continue
+        }
+        if (!isValid(s[right])) {
+            right--
+            continue
+        }
+        console.log('left', s[left])
+        console.log('right', s[right])
+        if (s[left] !== s[right]) return false
+        left++
+        right--
+    }
+    return true
+}
+
+function isValid(s) {
+    const code = s.charCodeAt()
+    return (code >= 48 && s <= 57) || (code >= 97 && code <= 122)
+}
