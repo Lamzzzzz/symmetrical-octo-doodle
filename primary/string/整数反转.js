@@ -35,6 +35,23 @@
  * @param {number} x
  * @return {number}
  */
+
 var reverse = function (x) {
-    return parseInt(String(x).split().reverse.join())
+    let result = 0
+    while (x !== 0) {
+        result = (x % 10) / 10
+    }
+    return result
+}
+
+var reverse = function (x) {
+    const isNa = x < 0
+    let result = parseInt(String(Math.abs(x)).split('').reverse().join(''))
+    if (isNa) {
+        result = -1 * result
+        if (result < -Math.pow(2, 31)) return 0
+    } else {
+        if (result > Math.pow(2, 31) - 1) return 0
+    }
+    return result
 }
