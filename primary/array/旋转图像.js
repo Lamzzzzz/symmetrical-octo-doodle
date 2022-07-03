@@ -38,9 +38,10 @@ var rotate = function (matrix) {
 
     while (y > 1) {
         for (let x = offset; x < length - offset; x++) {
-            const element = array[x]
+            const space = 1
         }
-        y -= (offset += 1) * 2
+        ++offset
+        y -= 2
     }
 }
 
